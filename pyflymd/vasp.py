@@ -41,7 +41,7 @@ def set_vasp(level='opt', kspacing=0.5):
                 }
     else:
         para = {'prec': 'accurate',
-                'encut': 400,
+                'encut': 500,
                 'isif': 3,
                 'ediff': 1e-4,
                 'nsw': 20,
