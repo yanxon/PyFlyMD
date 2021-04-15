@@ -19,7 +19,7 @@ kspacing = 0.2
 steps = 10
 
 struc = bulk("Si", 'diamond', a=5.468728, cubic=True)
-mliap = "20-20-checkpoint.pth"
+mliap = "potentials/Si-20-20.pth"
 ff = PyXtal_FF(model={'system': ["Si"]}, logo=False)
 ff.run(mode='predict', mliap=mliap)
 calc = PyXtalFFCalculator(ff=ff)
@@ -31,11 +31,11 @@ struc.set_calculator(calc)
 # MD
 traj = Trajectory("Si.traj", 'w', struc)
 MaxwellBoltzmannDistribution(struc, temperature_K=300)
-dyn = NPT(struc, 0.1 * units.fs, externalstress=0., ttime=10*units.fs, pfactor=10*units.fs, 
+dyn = NPT(struc, 0.1 * units.fs, externalstress=0., ttime=1000*units.fs, pfactor=1000*units.fs, 
           temperature_K=300)
 dyn.attach(traj.write, interval=steps)
 
-for i in range(100):
+for i in range(1000):
     dyn.run(steps=steps)
     PrintEnergy(struc)
     save_to_ASE_db(struc, path=ase_db)
